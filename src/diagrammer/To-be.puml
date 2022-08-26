@@ -1,0 +1,48 @@
+@startuml
+|#CCFFFF|Kunde|
+start
+:Går ind på hjemmesiden;
+|Website|
+:Have og fritid;
+:Byg selv produkt;
+if (Carport) then (Egne mål)
+  if (Carport tag) then (Rejsning)
+    :Forespørgsel;
+  else (Fladt tag)
+    :Forespørgsel;
+  endif
+else (Standard Carport)
+ if (Carport tag) then (Rejsning)
+   :Forespørgsel;
+ else (Fladt tag)
+   :Forespørgsel;
+ endif
+endif
+|#009966|Fog|
+:Udarbejder tilbud;
+|Fog|
+|Website|
+:Sender forespørgsel;
+|Kunde|
+|Fog|
+:Modtager email med forespørgsel;
+:Går ind på hjemmesiden;
+|Website|
+:Tjekker forespørgsel;
+|Fog|
+:Dialog med kunde;
+|Website|
+:Godkender forespørgsel;
+|Kunde|
+:Kunde modtager tegning og tilbud;
+:Betaling;
+|Website|
+if (Autogenerer stykliste) then
+|Kunde|
+  :Modtager stykliste;
+  stop
+else
+|Fog|
+  :Modtager stykliste;
+stop
+@enduml

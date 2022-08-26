@@ -1,0 +1,866 @@
+@startuml
+participant Actor
+Actor -> RequestApprove : execute
+activate RequestApprove
+RequestApprove -> CarportRequestFacade : approveSpecificCarportRequest
+activate CarportRequestFacade
+CarportRequestFacade -> CarportRequestMapper : new
+activate CarportRequestMapper
+CarportRequestMapper --> CarportRequestFacade
+deactivate CarportRequestMapper
+CarportRequestFacade -> CarportRequestMapper : approveSpecificRequest
+activate CarportRequestMapper
+CarportRequestMapper --> CarportRequestFacade
+deactivate CarportRequestMapper
+CarportRequestFacade --> RequestApprove
+deactivate CarportRequestFacade
+RequestApprove -> CarportRequestFacade : getSpecificCarportRequest
+activate CarportRequestFacade
+CarportRequestFacade -> CarportRequestMapper : new
+activate CarportRequestMapper
+CarportRequestMapper --> CarportRequestFacade
+deactivate CarportRequestMapper
+CarportRequestFacade -> CarportRequestMapper : getSpecificRequest
+activate CarportRequestMapper
+CarportRequestMapper -> CarportRequest : new
+activate CarportRequest
+CarportRequest --> CarportRequestMapper
+deactivate CarportRequest
+CarportRequestMapper --> CarportRequestFacade
+deactivate CarportRequestMapper
+CarportRequestFacade --> RequestApprove
+deactivate CarportRequestFacade
+RequestApprove -> OrderFacade : createOrder
+activate OrderFacade
+OrderFacade -> OrderMapper : new
+activate OrderMapper
+OrderMapper --> OrderFacade
+deactivate OrderMapper
+OrderFacade -> OrderMapper : createOrder
+activate OrderMapper
+OrderMapper --> OrderFacade
+deactivate OrderMapper
+OrderFacade --> RequestApprove
+deactivate OrderFacade
+RequestApprove -> MaterialFacade : getAllMaterials
+activate MaterialFacade
+MaterialFacade -> MaterialMapper : new
+activate MaterialMapper
+MaterialMapper --> MaterialFacade
+deactivate MaterialMapper
+MaterialFacade --> RequestApprove
+deactivate MaterialFacade
+RequestApprove -> CarportCalculator : new
+activate CarportCalculator
+CarportCalculator --> RequestApprove
+deactivate CarportCalculator
+RequestApprove -> CarportCalculator : createCarportNoShed
+activate CarportCalculator
+CarportCalculator -> FrameCalculator : calculateRafters
+activate FrameCalculator
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> BoltAndBracketCalculator : calculateSteelBracketLeft
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> FrameCalculator : calculateFrontUnderStern
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateSideUnderStern
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateFrontOverStern
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateSideOverStern
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateHead
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : rafters
+activate FrameCalculator
+FrameCalculator -> FrameCalculator : calculateRafters
+activate FrameCalculator
+FrameCalculator --> FrameCalculator
+deactivate FrameCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> PostCalculator : postAmount
+activate PostCalculator
+PostCalculator -> PostCalculator : calculatePostAmount
+activate PostCalculator
+PostCalculator --> PostCalculator
+deactivate PostCalculator
+PostCalculator -> Bomline : new
+activate Bomline
+Bomline --> PostCalculator
+deactivate Bomline
+PostCalculator --> CarportCalculator
+deactivate PostCalculator
+CarportCalculator -> FrameCalculator : calculateWeatherBoardForFrontAndBack
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateWeatherBoardForSide
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> RoofCalculator : calculateRoofPlates
+activate RoofCalculator
+RoofCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> RoofCalculator
+deactivate GeneralCalculator
+RoofCalculator -> RoofCalculator : calculateAmountOfRoofPlatesForWidth
+activate RoofCalculator
+RoofCalculator --> RoofCalculator
+deactivate RoofCalculator
+RoofCalculator -> Bomline : new
+activate Bomline
+Bomline --> RoofCalculator
+deactivate Bomline
+RoofCalculator -> RoofCalculator : calculateAmountOfRoofPlatesForWidth
+activate RoofCalculator
+RoofCalculator --> RoofCalculator
+deactivate RoofCalculator
+RoofCalculator -> Bomline : new
+activate Bomline
+Bomline --> RoofCalculator
+deactivate Bomline
+RoofCalculator -> Bomline : new
+activate Bomline
+Bomline --> RoofCalculator
+deactivate Bomline
+RoofCalculator --> CarportCalculator
+deactivate RoofCalculator
+CarportCalculator -> RoofCalculator : calculateAmountOfBoxesOfBottomScrews
+activate RoofCalculator
+RoofCalculator -> RoofCalculator : calculateBottomScrewForRoof
+activate RoofCalculator
+RoofCalculator --> RoofCalculator
+deactivate RoofCalculator
+RoofCalculator -> BoxCalculator : calculateQuantityOfBoxes
+activate BoxCalculator
+BoxCalculator --> RoofCalculator
+deactivate BoxCalculator
+RoofCalculator -> Bomline : new
+activate Bomline
+Bomline --> RoofCalculator
+deactivate Bomline
+RoofCalculator --> CarportCalculator
+deactivate RoofCalculator
+CarportCalculator -> BoltAndBracketCalculator : perforatedTape
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : steelBracketLeft
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateSteelBracketLeft
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : steelBracketRight
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateSteelBracketRight
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : screwsForSternAndWeatherBoard
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : screwsForTapeAndBracket
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateScrewForBracket
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateScrewForPerforatedTape
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoxCalculator : calculateQuantityOfBoxes
+activate BoxCalculator
+BoxCalculator --> BoltAndBracketCalculator
+deactivate BoxCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> PostCalculator : calculatePostAmount
+activate PostCalculator
+PostCalculator --> CarportCalculator
+deactivate PostCalculator
+CarportCalculator -> BoltAndBracketCalculator : carriageBolt
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateCarriageBolt
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> PostCalculator : calculatePostAmount
+activate PostCalculator
+PostCalculator --> CarportCalculator
+deactivate PostCalculator
+CarportCalculator -> BoltAndBracketCalculator : calculateCarriageBolt
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : squareSpacer
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateSquareSpacer
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator --> RequestApprove
+deactivate CarportCalculator
+RequestApprove -> CarportCalculator : createCarportWithFullShed
+activate CarportCalculator
+CarportCalculator -> FrameCalculator : calculateRafters
+activate FrameCalculator
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> BoltAndBracketCalculator : calculateSteelBracketLeft
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> FrameCalculator : calculateFrontUnderStern
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateSideUnderStern
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateFrontOverStern
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateSideUnderStern
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateNoggingAndBracket
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateHead
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : rafters
+activate FrameCalculator
+FrameCalculator -> FrameCalculator : calculateRafters
+activate FrameCalculator
+FrameCalculator --> FrameCalculator
+deactivate FrameCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> PostCalculator : postAmountWithShed
+activate PostCalculator
+PostCalculator -> PostCalculator : calculatePostAmountWithShed
+activate PostCalculator
+PostCalculator --> PostCalculator
+deactivate PostCalculator
+PostCalculator -> Bomline : new
+activate Bomline
+Bomline --> PostCalculator
+deactivate Bomline
+PostCalculator --> CarportCalculator
+deactivate PostCalculator
+CarportCalculator -> ShedCalculator : shedPlanksAndScrews
+activate ShedCalculator
+ShedCalculator -> ShedCalculator : calculateShed2on1
+activate ShedCalculator
+ShedCalculator -> ShedCalculator : calculateShedPlanksNeededForSide
+activate ShedCalculator
+ShedCalculator --> ShedCalculator
+deactivate ShedCalculator
+ShedCalculator -> ShedCalculator : calculateShedPlanksNeededForFrontAndBack
+activate ShedCalculator
+ShedCalculator --> ShedCalculator
+deactivate ShedCalculator
+ShedCalculator --> ShedCalculator
+deactivate ShedCalculator
+ShedCalculator -> ShedCalculator : calculateShortScrewsForShed
+activate ShedCalculator
+ShedCalculator --> ShedCalculator
+deactivate ShedCalculator
+ShedCalculator -> ShedCalculator : calculateLongScrewsForShed
+activate ShedCalculator
+ShedCalculator --> ShedCalculator
+deactivate ShedCalculator
+ShedCalculator -> BoxCalculator : calculateQuantityOfBoxes
+activate BoxCalculator
+BoxCalculator --> ShedCalculator
+deactivate BoxCalculator
+ShedCalculator -> BoxCalculator : calculateQuantityOfBoxes
+activate BoxCalculator
+BoxCalculator --> ShedCalculator
+deactivate BoxCalculator
+ShedCalculator -> Bomline : new
+activate Bomline
+Bomline --> ShedCalculator
+deactivate Bomline
+ShedCalculator -> Bomline : new
+activate Bomline
+Bomline --> ShedCalculator
+deactivate Bomline
+ShedCalculator -> Bomline : new
+activate Bomline
+Bomline --> ShedCalculator
+deactivate Bomline
+ShedCalculator --> CarportCalculator
+deactivate ShedCalculator
+CarportCalculator -> FrameCalculator : calculateWeatherBoardForFrontAndBack
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> FrameCalculator : calculateWeatherBoardForSide
+activate FrameCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> GeneralCalculator : calculateMaterialIfMoreThanOneIsNeeded
+activate GeneralCalculator
+GeneralCalculator --> FrameCalculator
+deactivate GeneralCalculator
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator -> Bomline : new
+activate Bomline
+Bomline --> FrameCalculator
+deactivate Bomline
+FrameCalculator --> CarportCalculator
+deactivate FrameCalculator
+CarportCalculator -> RoofCalculator : calculateRoofPlates
+activate RoofCalculator
+RoofCalculator -> GeneralCalculator : calculateMaterialLength
+activate GeneralCalculator
+GeneralCalculator --> RoofCalculator
+deactivate GeneralCalculator
+RoofCalculator -> RoofCalculator : calculateAmountOfRoofPlatesForWidth
+activate RoofCalculator
+RoofCalculator --> RoofCalculator
+deactivate RoofCalculator
+RoofCalculator -> Bomline : new
+activate Bomline
+Bomline --> RoofCalculator
+deactivate Bomline
+RoofCalculator -> RoofCalculator : calculateAmountOfRoofPlatesForWidth
+activate RoofCalculator
+RoofCalculator --> RoofCalculator
+deactivate RoofCalculator
+RoofCalculator -> Bomline : new
+activate Bomline
+Bomline --> RoofCalculator
+deactivate Bomline
+RoofCalculator -> Bomline : new
+activate Bomline
+Bomline --> RoofCalculator
+deactivate Bomline
+RoofCalculator --> CarportCalculator
+deactivate RoofCalculator
+CarportCalculator -> RoofCalculator : calculateAmountOfBoxesOfBottomScrews
+activate RoofCalculator
+RoofCalculator -> RoofCalculator : calculateBottomScrewForRoof
+activate RoofCalculator
+RoofCalculator --> RoofCalculator
+deactivate RoofCalculator
+RoofCalculator -> BoxCalculator : calculateQuantityOfBoxes
+activate BoxCalculator
+BoxCalculator --> RoofCalculator
+deactivate BoxCalculator
+RoofCalculator -> Bomline : new
+activate Bomline
+Bomline --> RoofCalculator
+deactivate Bomline
+RoofCalculator --> CarportCalculator
+deactivate RoofCalculator
+CarportCalculator -> BoltAndBracketCalculator : perforatedTape
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : steelBracketLeft
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateSteelBracketLeft
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : steelBracketRight
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateSteelBracketRight
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : screwsForSternAndWeatherBoard
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : screwsForTapeAndBracket
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateScrewForBracket
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateScrewForPerforatedTape
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoxCalculator : calculateQuantityOfBoxes
+activate BoxCalculator
+BoxCalculator --> BoltAndBracketCalculator
+deactivate BoxCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> PostCalculator : calculatePostAmountWithShed
+activate PostCalculator
+PostCalculator --> CarportCalculator
+deactivate PostCalculator
+CarportCalculator -> BoltAndBracketCalculator : carriageBoltWithShed
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateCarriageBoltWithShed
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> PostCalculator : calculatePostAmountWithShed
+activate PostCalculator
+PostCalculator --> CarportCalculator
+deactivate PostCalculator
+CarportCalculator -> BoltAndBracketCalculator : calculateCarriageBoltWithShed
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : squareSpacer
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> BoltAndBracketCalculator : calculateSquareSpacer
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator --> BoltAndBracketCalculator
+deactivate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : addWoodForZPlusHandleAndHingeForDoor
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator -> BoltAndBracketCalculator : calculateAngleBracket
+activate BoltAndBracketCalculator
+BoltAndBracketCalculator -> Bomline : new
+activate Bomline
+Bomline --> BoltAndBracketCalculator
+deactivate Bomline
+BoltAndBracketCalculator --> CarportCalculator
+deactivate BoltAndBracketCalculator
+CarportCalculator --> RequestApprove
+deactivate CarportCalculator
+RequestApprove -> BomFacade : createCompleteBillOfMaterials
+activate BomFacade
+BomFacade -> BomMapper : new
+activate BomMapper
+BomMapper --> BomFacade
+deactivate BomMapper
+BomFacade -> BomMapper : createCompleteBillOfMaterials
+activate BomMapper
+BomMapper -> BomMapper : createBom
+activate BomMapper
+BomMapper --> BomMapper
+deactivate BomMapper
+BomMapper -> BomMapper : createBomline
+activate BomMapper
+BomMapper --> BomMapper
+deactivate BomMapper
+BomMapper --> BomFacade
+deactivate BomMapper
+BomFacade --> RequestApprove
+deactivate BomFacade
+RequestApprove -> OrderDTOFacade : getOrderWithAllInfo
+activate OrderDTOFacade
+OrderDTOFacade -> OrderMapper : new
+activate OrderMapper
+OrderMapper --> OrderDTOFacade
+deactivate OrderMapper
+OrderDTOFacade -> CarportRequestDTOMapper : new
+activate CarportRequestDTOMapper
+CarportRequestDTOMapper --> OrderDTOFacade
+deactivate CarportRequestDTOMapper
+OrderDTOFacade -> BomMapper : new
+activate BomMapper
+BomMapper --> OrderDTOFacade
+deactivate BomMapper
+OrderDTOFacade -> BomDTOMapper : new
+activate BomDTOMapper
+BomDTOMapper --> OrderDTOFacade
+deactivate BomDTOMapper
+OrderDTOFacade -> OrderMapper : getSpecificOrder
+activate OrderMapper
+OrderMapper -> Order : new
+activate Order
+Order --> OrderMapper
+deactivate Order
+OrderMapper --> OrderDTOFacade
+deactivate OrderMapper
+OrderDTOFacade -> CarportRequestDTOMapper : getSpecificCarportRequestDTO
+activate CarportRequestDTOMapper
+CarportRequestDTOMapper -> CarportRequestDTO : new
+activate CarportRequestDTO
+CarportRequestDTO --> CarportRequestDTOMapper
+deactivate CarportRequestDTO
+CarportRequestDTOMapper --> OrderDTOFacade
+deactivate CarportRequestDTOMapper
+OrderDTOFacade -> BomMapper : getBomIdFromOrderId
+activate BomMapper
+BomMapper --> OrderDTOFacade
+deactivate BomMapper
+OrderDTOFacade -> BomDTOMapper : getBomlineWithInfo
+activate BomDTOMapper
+BomDTOMapper -> BomDTO : new
+activate BomDTO
+BomDTO --> BomDTOMapper
+deactivate BomDTO
+BomDTOMapper --> OrderDTOFacade
+deactivate BomDTOMapper
+OrderDTOFacade -> OrderDTO : new
+activate OrderDTO
+OrderDTO --> OrderDTOFacade
+deactivate OrderDTO
+OrderDTOFacade --> RequestApprove
+deactivate OrderDTOFacade
+return
+@enduml

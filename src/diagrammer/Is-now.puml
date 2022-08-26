@@ -1,0 +1,40 @@
+@startuml
+|#CCFFFF|Kunde|
+start
+:Går ind på hjemmesiden;
+|Website|
+if(Kunde) then (Log in)
+else(Opret bruger)
+endif
+:Brugerforside;
+if (Carport) then (Egne mål)
+  if (Carport skur) then (Med skur)
+    :Forespørgsel;
+  else (Uden skur)
+    :Forespørgsel;
+  endif
+else (Standard Carport)
+stop
+endif
+|#009966|Fog|
+|Fog|
+|Website|
+:Sender forespørgsel;
+:Kunde kan se tegning af carporten;
+|Kunde|
+|Fog|
+:Modtager forespørgsel;
+:Godkender forespørgsel;
+|Website|
+:Kunde modtager tilbud;
+:Betaling;
+|Website|
+if (Autogenerer stykliste) then
+|Kunde|
+  :Modtager stykliste og ordrebekræftelse;
+  stop
+else
+|Fog|
+  :Modtager stykliste;
+stop
+@enduml

@@ -1,0 +1,221 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Account
+class Order
+class Material
+class Bomline
+class Customer
+class CarportRequest
+class CarportCalculator
+class BoltAndBracketCalculator
+class BoxCalculator
+class FrameCalculator
+class GeneralCalculator
+class PostCalculator
+class RoofCalculator
+class ShedCalculator
+class SVGDrawing
+
+class CarportRequestDTO
+class BomDTO
+class OrderDTO
+
+Account <|-- Customer
+Customer *--"many" Order
+OrderDTO *-- Order
+OrderDTO *-- BomDTO
+OrderDTO *-- CarportRequestDTO
+Customer *--"many" CarportRequest
+Bomline *-- Material
+ShedCalculator *-- BoxCalculator
+CarportCalculator *-- ShedCalculator
+CarportCalculator *-- FrameCalculator
+CarportCalculator *-- PostCalculator
+CarportCalculator *-- RoofCalculator
+CarportCalculator *-- BoltAndBracketCalculator
+RoofCalculator *-- BoxCalculator
+RoofCalculator *-- GeneralCalculator
+FrameCalculator *-- GeneralCalculator
+BoltAndBracketCalculator *-- BoxCalculator
+SVGDrawing *-- GeneralCalculator
+SVGDrawing *-- FrameCalculator
+SVGDrawing *-- BoltAndBracketCalculator
+SVGDrawing *-- PostCalculator
+SVGDrawing *-- CarportRequest
+
+Account : - private String email
+Account : - private String password
+Account : - private int role
+Account : - private int accountId
+
+Customer : - private int customerId
+Customer : - private String name
+Customer : - private String address
+Customer : - pivate String city
+Customer : - private int zip
+Customer : - private int mobile
+
+Order : - private int orderId
+Order : - private int customerId
+Order : - private int carportRequestId
+Order : - private int carportType
+Order : - private localDateTime dateTime
+Order : - private int price
+
+Bomline : - private int descriptionId
+Bomline : - private Material material
+Bomline : - private int quantity
+Bomline : - private int bomID
+Bomline : - private int bomlineID
+Bomline : - private int materialId
+Bomline : - private String name
+Bomline : - private String description
+
+Material : - private int materialId
+Material : - private String name
+Material : - privare int price
+Material : - private String unit
+Material : - private int length
+Material : - private int typeId
+Material : - private int typeName
+Material : - private int width
+Material : - private int height
+Material : - private int quantity
+
+CarportRequest : - private int requestId
+CarportRequest : - private int width
+CarportRequest : - private int length
+CarportRequest : - private String roofType
+CarportRequest : - private int shedWidth
+CarportRequest : - private int shedLength
+CarportRequest : - private int roofIncline
+CarportRequest : - private int customerId
+CarportRequest : - private Boolean isApproved
+
+CarportCalculator : - private ShedCalculator shedCalculator
+CarportCalculator : - private FrameCalculator frameCalculator
+CarportCalculator : - private BoltAndBracketCalculator boltAndBracketCalculator
+CarportCalculator : - private RoofCalculator roofCalculator
+CarportCalculator : - private PostCalculator postCalculator
+
+CarportCalculator : - private ArrayList<Material>materialArrayList
+CarportCalculator : - private ArrayList<Material>noggingArrayList
+CarportCalculator : - private ArrayList<Material>headArrayList
+CarportCalculator : - private ArrayList<Material>roofPlatesArrayList
+CarportCalculator : - private ArrayList<Material>overSternArrayList
+CarportCalculator : - private ArrayList<Material>underSternArrayList
+CarportCalculator : - private ArrayList<Material>weatherboardArrayList
+
+CarportCalculator : + ArrayList<Bomline>createCarportNoShed(int,int)
+CarportCalculator : + ArrayList<Bomline>createCarportWithFullShed(int,int,int,int)
+
+
+RoofCalculator : - BoxCalculator boxCalculator
+RoofCalculator : - GeneralCalculator generalCalculator
+RoofCalculator : + Bomline calculateAmountOfBoxesOfBottomScrews(Material,int,int)
+RoofCalculator : + ArrayList<Bomline>calculateRoofPlates(int,int, ArrayList<Material>)
+RoofCalculator : + int calculateAmountOfRoofPlatesForWidth(Material,int)
+RoofCalculator : + int calculateBottomScrewsForRoof(int,int)
+
+FrameCalculator : - GeneralCalculator generalCalculator
+FrameCalculator : + Bomline rafters(Material,int)
+FrameCalculator : + ArrayList<Bomline>calculateSideOverStern(ArrayList<Material>,int)
+FrameCalculator : + ArrayList<Bomline>calculateSideUnderStern(ArrayList<Material>,int)
+FrameCalculator : + ArrayList<Bomline>calculateWeatherBoardForFrontAndBack(ArrayList<Material>,int)
+FrameCalculator : + ArrayList<Bomline>calculateWeatherBoardForSide(ArrayList<Material>,int)
+FrameCalculator : + int calculateRafters(int)
+FrameCalculator : + float calculateRaftersDistance(float,int)
+FrameCalculator : + ArrayList<Bomline>calculateFrontOverStern(ArrayList<Material>,int)
+FrameCalculator : + ArrayList<Bomline>calculateFrontUnderStern(ArrayList<Material>,int)
+FrameCalculator : + ArrayList<Bomline>calculateHead(int,ArrayList<Material>,int)
+FrameCalculator : + ArrayList<Bomline>calculateNoggingAndBracket(int, ArrayList<Material>)
+
+GeneralCalculator : + int calculateXDistance(int)
+GeneralCalculator : + int calculateXDistanceWithShed(int,int)
+GeneralCalculator : + ArrayList<Material>calculateMaterialIfMoreThanOneIsNeeded(int,ArrayList<Material>)
+GeneralCalculator : + Material calculateMaterialLength(int,ArrayList<Material>)
+
+PostCalculator : + int calculatePostAmount(int)
+PostCalculator : + int calculatePostAmountNeeded(int)
+PostCalculator : + int calculatePostAmountWithShed(int,int)
+PostCalculator : + int calculatePostDistance(int)
+PostCalculator : + int calculatePostDistanceWithFUllShed(int,int)
+PostCalculator : + int calculatePostDistanceWithFullShedWidth(int)
+
+ShedCalculator : - BoxCalculator boxCalculator
+ShedCalculator : + Bomline postAmount(Material,int)
+ShedCalculator : + Bomline postAmountWithShed(int,int,Material)
+ShedCalculator : + ArrayList<Bomline>shedPlancksAndScrews(int,int,Material,Material,Material)
+ShedCalculator : + int calculateShed2On1(float,float,Material)
+ShedCalculator : + int calculateShedPlancksNeededForFrontAndBack(float,Material)
+ShedCalculator : + int calculateShedPlancksNeededForSide(float,Material)
+ShedCalculator : + int calculateLongScrewsForShed(int)
+
+BoltAndBracketCalculator : - BoxCalculator boxCalculator
+BoltAndBracketCalculator : + Bomline squareSpacer(Material,int)
+BoltAndBracketCalculator : + Bomline steelBracketLeft(Material,int)
+BoltAndBracketCalculator : + Bomline steelBracketRight(Material,int)
+BoltAndBracketCalculator : + Bomline perforatedTape(Material)
+BoltAndBracketCalculator : + Bomline carriageBolt(Material,int)
+BoltAndBracketCalculator : + int calculateSquareSpacer(int)
+BoltAndBracketCalculator : + int calculateSteelBracketLeft(int)
+BoltAndBracketCalculator : + int calculateSteelBracketRight(int)
+BoltAndBracketCalculator : + int calculateShortScrewsForShed(int)
+BoltAndBracketCalculator : + Bomline screwsForSternAndWeatherboard(Material)
+BoltAndBracketCalculator : + Bomline screwsForTapeAndBracket(Material,int,int)
+BoltAndBracketCalculator : + int calculateScrewsForBracket(int)
+BoltAndBracketCalculator : + int calculateScrewsForPerforatedTape(int)
+BoltAndBracketCalculator : + ArrayList<Bomline>addWoodForZPlusHandleAndHingeForDoor()
+BoltAndBracketCalculator : + int calculatePerforatedTapeLength(int)
+BoltAndBracketCalculator : + int calculatePerforatedTapeLengthWithShed(int,int)
+BoltAndBracketCalculator : + Bomline calculateAngleBracket(int)
+BoltAndBracketCalculator : + int calculateCarriageBolt(int)
+BoltAndBracketCalculator : + int calculateCarriageBoltWithShed(int,int)
+
+BoxCalculator : + int calculateQuantityOfBoxes(int, Material)
+
+
+CarportRequestDTO : - private int customerId
+CarportRequestDTO : - private int carportRequestId
+CarportRequestDTO : - private int width
+CarportRequestDTO : - private int length
+CarportRequestDTO : - private String roof
+CarportRequestDTO : - private int roofIncline
+CarportRequestDTO : - private Boolean isApproved
+CarportRequestDTO : - private int shedLength
+CarportRequestDTO : - private int shedWidth
+CarportRequestDTO : - private String name
+CarportRequestDTO : - private String address
+CarportRequestDTO : - private String city
+CarportRequestDTO : - private int zip
+CarportRequestDTO : - private int mobile
+CarportRequestDTO : - private int accountId
+
+BomDTO : - private int bomID
+BomDTO : - private int bomlineID
+BomDTO : - private String name
+BomDTO : - private int length
+BomDTO : - private int quantity
+BomDTO : - private String unit
+BomDTO : - private String description
+BomDTO : - private int materialId
+BomDTO : - private int price
+BomDTO : - private int typeId
+BomDTO : - private int width
+BomDTO : - private int height
+BomDTO : - private int mQuantity
+
+OrderDTO : - private Order order
+OrderDTO : - private CarportRequestDTO carportRequestDTO
+OrderDTO : - private ArrayList<bomDTO>bomDTOArrayList
+
+SVGDrawing : - private GeneralCalculator generalCalculator
+SVGDrawing : - private FrameCalculator frameCalculator
+SVGDrawing : - private BoltAndBracketCalculator boltAndBracketCalculator
+SVGDrawing : - private PostCalculator postCalculator
+SVGDrawing : - private CarportRequest carportRequest
+SVGDrawing : + SVG draw()
+SVGDrawing : + SVG drawWithShed()
+
+@enduml

@@ -1,0 +1,135 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Account
+class Order
+class Material
+class Bomline
+class Customer
+class CarportRequest
+class Description
+class CarportCalculator
+
+
+Account <|-- Customer
+Customer *--"many" Order
+Customer *--"many" CarportRequest
+Bomline *-- Material
+
+Account : - private String email
+Account : - private String password
+Account : - private int role
+Account : - private int accountId
+
+Customer : - private int customerId
+Customer : - private String name
+Customer : - private String address
+Customer : - pivate String city
+Customer : - private int zip
+Customer : - private int mobile
+
+Order : - private int orderId
+Order : - private int customerId
+Order : - private int carportRequestId
+Order : - private int carportType
+Order : - private localDateTime dateTime
+Order : - private int price
+
+Bomline : - private int descriptionId
+Bomline : - private Material material
+Bomline : - private int quantity
+Bomline : - private int bomID
+Bomline : - private int bomlineID
+Bomline : - private int materialId
+Bomline : - private String name
+Bomline : - private String description
+
+Material : - private int materialId
+Material : - private String name
+Material : - privare int price
+Material : - private String unit
+Material : - private int length
+Material : - private int typeId
+Material : - private int typeName
+Material : - private int width
+Material : - private int height
+Material : - private int quantity
+
+CarportRequest : - private int requestId
+CarportRequest : - private int width
+CarportRequest : - private int length
+CarportRequest : - private String roofType
+CarportRequest : - private int shedWidth
+CarportRequest : - private int shedLength
+CarportRequest : - private int roofIncline
+CarportRequest : - private int customerId
+CarportRequest : - private Boolean isApproved
+
+Description : - private int descriptionId
+Description : - private int description
+
+CarportCalculator : - private ArrayList<Material>materialArrayList
+CarportCalculator : - private ArrayList<Material>noggingArrayList
+CarportCalculator : - private ArrayList<Material>headArrayList
+CarportCalculator : - private ArrayList<Material>roofPlatesArrayList
+CarportCalculator : - private ArrayList<Material>overSternArrayList
+CarportCalculator : - private ArrayList<Material>underSternArrayList
+CarportCalculator : - private ArrayList<Material>weatherboardArrayList
+CarportCalculator : + ArrayList<Bomline>addWoodForZPlusHandleAndHingeForDoor()
+CarportCalculator : + Bomline calculateAmountOfBoxesOfBottomScrews(Material,int,int)
+CarportCalculator : + int calculateAmountOfRoofPlatesForWidth(Material,int)
+CarportCalculator : + Bomline calculateAngleBracket(int)
+CarportCalculator : + int calculateBottomScrewsForRoof(int,int)
+CarportCalculator : + int calculateCarriageBolt(int)
+CarportCalculator : + int calculateCarriageBoltWithShed(int,int)
+CarportCalculator : + ArrayList<Bomline>calculateFrontOverStern(ArrayList<Material>,int)
+CarportCalculator : + ArrayList<Bomline>calculateFrontUnderStern(ArrayList<Material>,int)
+CarportCalculator : + ArrayList<Bomline>calculateHead(int,ArrayList<Material>,int)
+CarportCalculator : + int calculateLongScrewsForShed(int)
+CarportCalculator : + ArrayList<Material>calculateMaterialIfMoreThanOneIsNeeded(int,ArrayList<Material>)
+CarportCalculator : + Material calculateMaterialLength(int,ArrayList<Material>)
+CarportCalculator : + ArrayList<Bomline>calculateNoggingAndBracket(int, ArrayList<Material>)
+CarportCalculator : + int calculatePerforatedTapeLength(int)
+CarportCalculator : + int calculatePerforatedTapeLengthWithShed(int,int)
+CarportCalculator : + int calculatePostAmount(int)
+CarportCalculator : + int calculatePostAmountNeeded(int)
+CarportCalculator : + int calculatePostAmountWithShed(int,int)
+CarportCalculator : + int calculatePostDistance(int)
+CarportCalculator : + int calculatePostDistanceWithFUllShed(int,int)
+CarportCalculator : + int calculatePostDistanceWithFullShedWidth(int)
+CarportCalculator : + int calculateQuantityOfBoxes(int, Material)
+CarportCalculator : + int calculateRafters(int)
+CarportCalculator : + float calculateRaftersDistance(float,int)
+CarportCalculator : + ArrayList<Bomline>calculateRoofPlates(int,int, ArrayList<Material>)
+CarportCalculator : + int calculateScrewsForBracket(int)
+CarportCalculator : + int calculateScrewsForPerforatedTape(int)
+CarportCalculator : + int calculateShed2On1(float,float,Material)
+CarportCalculator : + int calculateShedPlancksNeededForFrontAndBack(float,Material)
+CarportCalculator : + int calculateShedPlancksNeededForSide(float,Material)
+CarportCalculator : + int calculateShortScrewsForShed(int)
+CarportCalculator : + ArrayList<Bomline>calculateSideOverStern(ArrayList<Material>,int)
+CarportCalculator : + ArrayList<Bomline>calculateSideUnderStern(ArrayList<Material>,int)
+CarportCalculator : + int calculateSquareSpacer(int)
+CarportCalculator : + int calculateSteelBracketLeft(int)
+CarportCalculator : + int calculateSteelBracketRight(int)
+CarportCalculator : + ArrayList<Bomline>calculateWeatherBoardForFrontAndBack(ArrayList<Material>,int)
+CarportCalculator : + ArrayList<Bomline>calculateWeatherBoardForSide(ArrayList<Material>,int)
+CarportCalculator : + int calculateXDistance(int)
+CarportCalculator : + int calculateXDistanceWithShed(int,int)
+CarportCalculator : + Bomline carriageBolt(Material,int)
+CarportCalculator : + ArrayList<Bomline>createCarportNoShed(int,int)
+CarportCalculator : + ArrayList<Bomline>createCarportWithFullShed(int,int,int,int)
+CarportCalculator : + Bomline perforatedTape(Material)
+CarportCalculator : + Bomline postAmount(Material,int)
+CarportCalculator : + Bomline postAmountWithShed(int,int,Material)
+CarportCalculator : + Bomline rafters(Material,int)
+CarportCalculator : + Bomline screwsForSternAndWeatherboard(Material)
+CarportCalculator : + Bomline screwsForTapeAndBracket(Material,int,int)
+CarportCalculator : + ArrayList<Bomline>shedPlancksAndScrews(int,int,Material,Material,Material)
+CarportCalculator : + Bomline squareSpacer(Material,int)
+CarportCalculator : + Bomline steelBracketLeft(Material,int)
+CarportCalculator : + Bomline steelBracketRight(Material,int)
+
+
+
+@enduml

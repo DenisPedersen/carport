@@ -1,0 +1,57 @@
+@startuml
+
+actor       Admin       as Foo1
+boundary    index.jsp   as Foo2
+boundary    materialoverview.jsp    as Foo3
+boundary    materialmodify.jsp    as Foo11
+control     Frontcontroller     as Foo4
+control     Command.MaterialOverview    as Foo5
+control     Command.MaterialModify    as Foo6
+control     Command.MaterialGetById    as Foo10
+collections MaterialFacade as Foo7
+collections MaterialMapper as Foo8
+database    Database    as Foo9
+
+Foo1 -> Foo2 : log in
+Foo2 -> Foo4 : click on "Se lager"
+Foo4 -> Foo5 : redirect to command
+Foo5 -> Foo7 : materialFacade.getAllMaterials()
+Foo7 -> Foo8 : materialMapper.getAllMaterials()
+Foo8 -> Foo9 : executeQuery()
+Foo9 -> Foo8 : resultset
+Foo8 -> Foo8 : validate resultset
+Foo8 -> Foo7 : returns arraylist
+Foo7 -> Foo5 : return arraylist
+Foo5 -> Foo4 : returns "materialoverview"
+Foo4 -> Foo3 : redirect to materialoverview.jsp
+Foo3 -> Foo4 : click on "Rediger"
+Foo4 -> Foo10 : redirect to command
+Foo10 -> Foo7 : materialFacade.getSpecifikMaterial()
+Foo7 -> Foo8 : materialMapper.getSpecifikMaterial()
+Foo8 -> Foo9 : executeQuery()
+Foo9 -> Foo8 : resultset
+Foo8 -> Foo8 : validate resultset
+Foo8 -> Foo7 : returns specifik material
+Foo7 -> Foo10 : returns specifik material
+Foo10 -> Foo4 : return "materialmodify"
+Foo4 -> Foo11 : redirect to materialmodify.jsp
+Foo11 -> Foo4 : click on "Godkend"
+Foo4 -> Foo6 : redirect to command
+Foo6 -> Foo7 : materialFacade.updateMaterial()
+Foo7 -> Foo8 : materialMapper.updateMaterial()
+Foo8 -> Foo9 : executeQuery()
+Foo9 -> Foo8 : resultset
+Foo8 -> Foo8 : validate resultset
+Foo8 -> Foo7 : returns updated material
+Foo7 -> Foo6 : returns updates material
+Foo6 -> Foo7 :materialFacade.getAllMaterials()
+Foo7 -> Foo8 : materialMapper.getAllMaterials()
+Foo8 -> Foo9 : executeQuery()
+Foo9 -> Foo8 : resultset
+Foo8 -> Foo8 : validate resultset
+Foo8 -> Foo7 : returns updated arraylist
+Foo7 -> Foo6 : returns updated arraylist
+Foo6 -> Foo4 : return "materialoverview"
+Foo4 -> Foo3 : shows the updated arraylist
+
+@enduml

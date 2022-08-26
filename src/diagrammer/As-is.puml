@@ -1,0 +1,36 @@
+@startuml
+|#FFFCCC|Kunde|
+start
+:Går ind på hjemmesiden;
+|#0099CC|Website|
+:Have og fritid;
+:Byg selv produkt;
+:Carport;
+:Vælg carport type;
+:Carport efter egne mål;
+if (Carport tag) then (Rejsning)
+  :Forespørgsel;
+else (Fladt tag)
+  :Forespørgsel;
+endif
+|#006633|Fog|
+:Udarbejder tilbud;
+|Website|
+:Sender forespørgsel;
+|Fog|
+:Modtager forespørgsel;
+|M3 quickbyg|
+:Taster oplysninger;
+:Genererer tegning af carport;
+:Genererer stykliste;
+|Fog|
+:Opdater stykliste med plukliste;
+|Kunde|
+:Kunde modtager tegning og tilbud;
+:Betaling;
+|Fog|
+:Leverer stykliste;
+|Kunde|
+:Modtager stykliste;
+stop
+@enduml

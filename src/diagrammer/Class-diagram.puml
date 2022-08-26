@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class  Account
+class Order
+class Material
+class Orderline
+class Customer
+
+
+Account <|-- Customer
+Order *-- Orderline
+Orderline *-- Material
+Customer *-- Order
+
+Account : - String email
+Account : - String password
+Account : - int role
+
+Customer : - int customerId
+Customer : - String name
+Customer : - String address
+Customer : - String city
+Customer : - int zip
+Customer : - int mobile
+
+Order : - int orderId
+Order : - Arraylist<Orderline>
+Order : - int customerId
+Order : - localDateTime
+
+Orderline : - int orderlineId
+Orderline : - int quantity
+Orderline : - Material material
+Orderline : - String description
+
+Material : - int materialId
+Material : - String name
+Material : - int price
+Material : - String unit
+Material : - int maxLength
+Material : - int typeId
+Material : - int materialType
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+object Account
+object Order
+object Material
+object BOM
+object Customer
+object CarportRequest
+object CarportCalculator
+object SVGDrawing
+
+
+
+Account <|-- Customer
+Customer *-- CarportRequest
+Order *-- BOM
+Customer *-- Order
+Order *-- CarportRequest
+CarportRequest *-- SVGDrawing
+BOM *-- Material
+CarportCalculator *-- Material
+
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+
+actor       Customer       as Foo1
+boundary    index.jsp   as Foo8
+boundary    login.jsp    as Foo2
+control     Frontcontroller     as Foo3
+control     Command.Login    as Foo10
+collections CustomerFacade as Foo7
+collections AccountFacade as Foo5
+collections AccountMapper as Foo4
+collections CustomerMapper as Foo9
+database    Database    as Foo6
+
+Foo1 -> Foo2 : email & password
+Foo2 -> Foo3 : doPost
+Foo3 -> Foo10 : execute
+Foo10 -> Foo5 : check account
+Foo5 -> Foo4 : AccountFacade.login(email, password)
+Foo4 -> Foo6 : executeQuery()
+Foo4 <- Foo6 : resultset
+Foo4 -> Foo4 : validate resultset
+Foo4 -> Foo5 : return validated account
+Foo5 -> Foo10 : account
+Foo10 -> Foo7 : check customer
+Foo7 -> Foo9 : CustomerFacade.customerAccount(account)
+Foo9 -> Foo6 : executeQuery()
+Foo9 <- Foo6 : resultset
+Foo9 -> Foo9 : validate resultset
+Foo9 -> Foo7 : return validated customer
+Foo7 -> Foo10 : customer
+Foo10 -> Foo3 : return "index"
+Foo3 -> Foo8 : redirect to index.jsp
+
+@enduml
